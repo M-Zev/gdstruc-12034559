@@ -1,13 +1,11 @@
-package midterms;
-
 import java.util.Random;
 import java.util.Scanner;
 
 public class CardGame {
-    private CardStack playerDeck;
-    private CardStack discardedPile;
-    private CardStack playerHand;
-    private Random random;
+    private final CardStack playerDeck;
+    private final CardStack discardedPile;
+    private final CardStack playerHand;
+    private final Random random;
 
     public CardGame() {
         playerDeck = new CardStack();
@@ -24,8 +22,8 @@ public class CardGame {
         }
     }
 
-    private void drawCards(int drawCardsCount) {
-        for (int i = 0; i < drawCardsCount; i++) {
+    private void drawCards(int commandCardCount) {
+        for (int i = 0; i < commandCardCount; i++) {
             if (playerDeck.isEmpty()) {
                 break;
             }
@@ -33,17 +31,18 @@ public class CardGame {
         }
     }
 
-    private void discardCards(int discardCardsCount) {
-        for (int i = 0; i < discardCardsCount; i++) {
+    private void discardCards(int commandCardCount) {
+        for (int i = 0; i < commandCardCount; i++) {
             if (playerHand.isEmpty()) {
                 break;
             }
+
             discardedPile.push(playerHand.pop());
         }
     }
 
-    private void getCardsFromDiscardedPile(int drawDiscardCardsCount) {
-        for (int i = 0; i < drawDiscardCardsCount; i++) {
+    private void drawFromDiscardedPile(int commandCardCount) {
+        for (int i = 0; i < commandCardCount; i++) {
             if (discardedPile.isEmpty()) {
                 break;
             }
@@ -68,12 +67,12 @@ public class CardGame {
 
         while (!playerDeck.isEmpty()) {
             int command = random.nextInt(3);
-            int x = random.nextInt(5) + 1;
+            int commandCardCount = random.nextInt(5) + 1;
 
             switch (command) {
                 case 0:
-                    System.out.println("Command: Draw " + x + " cards");
-                    drawCards(x);
+                    System.out.println("Command: Draw " + commandCardCount + " cards");
+                    drawCards(commandCardCount);
                     break;
 
                 case 1:
@@ -81,8 +80,8 @@ public class CardGame {
                         continue;
                     }
 
-                    System.out.println("Command: Discard " + x + " cards");
-                    discardCards(x);
+                    System.out.println("Command: Discard " + commandCardCount + " cards");
+                    discardCards(commandCardCount);
                     break;
 
                 case 2:
@@ -90,8 +89,8 @@ public class CardGame {
                         continue;
                     }
 
-                    System.out.println("Command: Get " + x + " cards from the discarded pile");
-                    getCardsFromDiscardedPile(x);
+                    System.out.println("Command: Get " + commandCardCount + " cards from the discarded pile");
+                    drawFromDiscardedPile(commandCardCount);
                     break;
             }
 

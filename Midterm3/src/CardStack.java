@@ -1,5 +1,3 @@
-package midterms;
-
 import java.util.LinkedList;
 
 public class CardStack {
